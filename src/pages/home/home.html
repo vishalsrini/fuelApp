@@ -1,14 +1,36 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
-      Ionic Blank
+      Fuel Price App
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-list>
+    <ion-item *ngIf="cities">
+      <ion-label>City</ion-label>
+      <ion-select [(ngModel)]="city">
+        <ion-option *ngFor="let cityName of cities">{{cityName}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-list radio-group [(ngModel)]="fuel">
+    <ion-list-header>
+      Fuel Type
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label>Petrol</ion-label>
+      <ion-radio checked="true" value="petrol"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Diesel</ion-label>
+      <ion-radio value="diesel"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <button ion-button block (click)="getPriceQuote()">Get Price</button>
+
 </ion-content>
