@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -16,12 +16,16 @@ export class HomePage {
   cities: any[];
   city: string = 'Chennai';
   fuel: string = 'petrol';
-  price: any;
+  dprice: any;
+  pprice: any;
+  lst_city: any;
+  showFuel: any;
 
   constructor(public navCtrl: NavController, public _http: Http, public toastCtrl: ToastController) {
     this.getAvailableCities().subscribe(data => {
       this.cities = data.cities;
     })
+    this.getPriceQuote();
   }
 
   getPriceQuote() {
@@ -34,14 +38,15 @@ export class HomePage {
       toast.present();
     } else {
       // console.log(this.city, this.fuel);
-      this.getPriceDetails(this.fuel, this.city).subscribe(data => {
-        this.price = data.price;
-        const toast = this.toastCtrl.create({
-          message: this.fuel.toUpperCase() + ' price at ' + this.city.toUpperCase() + ' is ' + this.price,
-          showCloseButton: true,
-          closeButtonText: 'Ok'
-        });
-        toast.present();
+      this.getPetrolPriceDetails(this.city).subscribe(data => {
+        this.pprice = data.price;
+        this.lst_city = this.city;
+      }, error => {
+        console.log(error);
+      })
+      this.getDieselPriceDetails(this.city).subscribe(data => {
+        this.dprice = data.price;
+        this.lst_city = this.city;
       }, error => {
         console.log(error);
       })
@@ -50,19 +55,19 @@ export class HomePage {
 
 
   getAvailableCities() {
-    // console.log(JSON.stringify(data));
-    // const request = { scheduleInquiryRequest:  data };
-    // console.log(JSON.stringify(request));
     return this._http.get('https://still-tundra-35330.herokuapp.com/main/city_list')
       .map(response => <any>response.json())
       .catch(this.handleError);
   }
 
-  getPriceDetails(fuelType, city) {
-    // console.log(JSON.stringify(data));
-    // const request = { scheduleInquiryRequest:  data };
-    // console.log(JSON.stringify(request));
-    return this._http.get('https://still-tundra-35330.herokuapp.com/main/' + city + '/' + fuelType + '/price')
+  getPetrolPriceDetails(city) {
+    return this._http.get('https://still-tundra-35330.herokuapp.com/main/' + city + '/petrol/price')
+      .map(response => <any>response.json())
+      .catch(this.handleError);
+  }
+
+  getDieselPriceDetails(city) {
+    return this._http.get('https://still-tundra-35330.herokuapp.com/main/' + city + '/diesel/price')
       .map(response => <any>response.json())
       .catch(this.handleError);
   }
@@ -80,7 +85,7 @@ export class HomePage {
       errMsg = error.message ? error.message : error.toString();
     }
     // console.error(errMsg);
-    alert('System Error!!!' + errMsg);
+    alert('Network connection problem. Please Switch ON your mobile data or connect with WiFi');
     return Observable.throw(errMsg);
   }
 

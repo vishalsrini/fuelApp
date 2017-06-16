@@ -1,3 +1,47 @@
 page-home {
 
 }
+
+.card-md {
+    margin-top: 25%;
+    height: 35vw;
+    width: 35vw;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 25px #488aff;
+    display: inline-block;
+    margin-left: 8%;
+    margin-right: auto;
+     background-color: #488aff;
+    color: #fff;
+
+}
+
+.card-md-diesel {
+    box-shadow: 0 0 25px darkred !important;
+    background-color: darkred !important;
+    color: #fff;
+}
+
+.card-content-md {
+    text-align: center;
+    padding-top: 25%;
+}
+
+.inside {
+    font-size: 10px;
+    font-style: bold;
+}
+
+ion-content {
+    background-image: url('../assets/india.jpg');
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom;
+}
+
+.item-md {
+    font-weight: bold;
+    font-size: 2rem;
+}

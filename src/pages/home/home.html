@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      Fuel Price App
+      Daily Fuel Price
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -10,27 +10,30 @@
   <ion-list>
     <ion-item *ngIf="cities">
       <ion-label>City</ion-label>
-      <ion-select [(ngModel)]="city">
+      <ion-select [(ngModel)]="city" (ngModelChange)="getPriceQuote()">
         <ion-option *ngFor="let cityName of cities">{{cityName}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
 
-  <ion-list radio-group [(ngModel)]="fuel">
-    <ion-list-header>
-      Fuel Type
-    </ion-list-header>
+  <ion-card *ngIf="pprice">
+    <ion-card-content>
+      {{lst_city}}
+      <br>
+      Rs. {{pprice}}
+      <br>
+      <span class="inside"> PETROL PRICE</span>
+    </ion-card-content>
+  </ion-card>
 
-    <ion-item>
-      <ion-label>Petrol</ion-label>
-      <ion-radio checked="true" value="petrol"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Diesel</ion-label>
-      <ion-radio value="diesel"></ion-radio>
-    </ion-item>
-  </ion-list>
-  <button ion-button block (click)="getPriceQuote()">Get Price</button>
+  <ion-card class="card-md-diesel" *ngIf="dprice">
+    <ion-card-content>
+      {{lst_city}}
+      <br>
+      Rs. {{dprice}}
+      <br>
+      <span class="inside"> DIESEL PRICE</span>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>
