@@ -24,7 +24,7 @@ export class GoogleMapsProvider {
   mapLoaded: any;
   mapLoadedObserver: any;
   markers: any = [];
-  apiKey: string;
+  apiKey: string = "AIzaSyCjuybqm806PNDcxtkNHEk_MBOJMeBuDQk";
 
   constructor(public http: Http, public connectivityService: ConnectivityProvider, public geolocation: Geolocation, public launchNavigator: LaunchNavigator) {
 
