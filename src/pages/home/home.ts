@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { Http, Response } from '@angular/http';
 import { ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { LoadingController } from 'ionic-angular';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/mapTo';
@@ -21,14 +22,22 @@ export class HomePage {
   lst_city: any;
   showFuel: any;
 
-  constructor(public navCtrl: NavController, public _http: Http, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public _http: Http, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait...",
+    });
+    loader.present();
     this.getAvailableCities().subscribe(data => {
       this.cities = data.cities;
+      loader.dismiss();
     })
     this.getPriceQuote();
   }
 
   getPriceQuote() {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait...",
+    });
     if (this.city == null) {
       const toast = this.toastCtrl.create({
         message: 'Please select a city to get price information',
@@ -37,17 +46,26 @@ export class HomePage {
       });
       toast.present();
     } else {
+      loader.present();
       // console.log(this.city, this.fuel);
       this.getPetrolPriceDetails(this.city).subscribe(data => {
         this.pprice = data.price;
         this.lst_city = this.city;
+        loader.dismiss();
       }, error => {
+        loader.dismiss();
         console.log(error);
-      })
+      });
+      let loader1 = this.loadingCtrl.create({
+      content: "Please wait...",
+    });
+    loader1.present();
       this.getDieselPriceDetails(this.city).subscribe(data => {
         this.dprice = data.price;
         this.lst_city = this.city;
+        loader1.dismiss();
       }, error => {
+        loader.dismiss();
         console.log(error);
       })
     }

@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      List ( Click to navigate )
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list no-lines>
+        <ion-item *ngFor="let location of locations.data" (click)="navigate(location.latitude, location.longitude)">
+            <ion-avatar item-left>
+                <ion-icon name="pin"></ion-icon>
+            </ion-avatar>
+            <h2>{{location.title}}</h2>
+            <p>{{location.distance}} miles</p>
+        </ion-item>
+        <ion-item *ngIf="!locations.data">
+          Please Visit previous tab (Map) and come back here
+        </ion-item>
+    </ion-list>
+</ion-content>

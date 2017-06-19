@@ -1,5 +1,5 @@
 {
-  "name": "fuelPrice",
+  "name": "dailyFuelPrice",
   "app_id": "",
   "type": "ionic-angular"
 }
